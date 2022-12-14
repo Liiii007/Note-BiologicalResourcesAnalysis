@@ -1,0 +1,63 @@
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, graphicx}
+\usepackage[bookmarks=true, colorlinks, citecolor=blue, linkcolor=black]{hyperref}
+\newtheorem{theorem}{}
+
+\title{生物资源评估}
+\author{Liiii00}
+
+\begin{document}
+\maketitle
+
+\newpage
+\section{公式}
+
+\begin{theorem}Russell原理
+    $$B_{t+1}=B_t+R+G-M-Y$$ 
+\end{theorem}
+
+
+\begin{itemize}
+    \item $B_t$:t时的生物量
+    \item $R$:补充量
+    \item $G$:生长量
+    \item $M$:自然死亡量
+    \item $Y$:捕捞死亡量
+\end{itemize}
+
+\begin{theorem}剩余产量模型
+
+将$R,G,M$合为一项，有：
+$$B_{t+\Delta t} = B_t+S_t-C_t$$
+
+\end{theorem}
+
+$$
+\begin{aligned}
+    {\frac{dB}{dt}} & = [G(B_t) + R(B_t) - M(B_t)]B_t-F_t(f)B_t \\
+                    & = f(B_t)B_t-F_t(f)B_t
+\end{aligned}
+$$
+
+对于Schaefer模型,有:$f\left(B_t\right) = r\left(1-\frac{B_t}{K}\right)$
+
+故：
+$$dB_t=B_{t+1} - B{t},\space dt=1$$
+$$B_{t+1} = B_t + rB_t\cdot(1-\frac{B_t}{K})\cdot1+C_t\cdot1$$
+
+
+\subsection{剩余产量模型}
+
+假设
+
+$$
+\begin{aligned}
+    {\frac{dN}{dt}} & = bN-dN \text{} \\
+    &=rN
+\end{aligned}
+$$
+\begin{center}
+    $b$为单位时间出生个数,\quad $d$为单位时间死亡个数, \quad$r=b-d$
+\end{center} 
+
+\end{document}

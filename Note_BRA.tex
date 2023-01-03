@@ -2,6 +2,7 @@
 \usepackage{amsmath, amsthm, amssymb, graphicx}
 \usepackage[bookmarks=true, colorlinks, citecolor=blue, linkcolor=black]{hyperref}
 \newtheorem{theorem}{}
+\newtheorem{subtheorem}{}
 
 \title{生物资源评估}
 \author{Liiii00}
@@ -13,51 +14,113 @@
 \section{公式}
 
 \begin{theorem}Russell原理
-    $$B_{t+1}=B_t+R+G-M-Y$$ 
+    $$\underset
+    {
+        \text
+        {
+            $B_t$:t时的生物量 \quad 
+            $R$:补充量 \quad 
+            $G$:生长量 \quad 
+            $M$:自然死亡量 \quad
+            $Y$:捕捞死亡量
+        }
+    }
+    {
+        B_2=B_1+R+G-M-Y
+    }
+    $$
 \end{theorem}
 
+\begin{theorem}生长方程
+    \begin{subtheorem}VBGF
+        $$L_t = L_{\infty} \bigg(1-e^{-K(t-t_0)}\bigg)$$ 
+        $$W_t = W_{\infty} \bigg(1-e^{-K(t-t_0)}\bigg)^b$$ 
+    \end{subtheorem}
+    
+    \begin{subtheorem}Logistic
+        $$L_t = \frac{L_{\infty}}{1+e^{\alpha-rt}}$$ 
+        $$W_t = \frac{W_{\infty}}{\big(1+e^{\alpha-rt}\big)^b}$$ 
+    \end{subtheorem}
 
-\begin{itemize}
-    \item $B_t$:t时的生物量
-    \item $R$:补充量
-    \item $G$:生长量
-    \item $M$:自然死亡量
-    \item $Y$:捕捞死亡量
-\end{itemize}
+    \begin{subtheorem}Gompertz
+        $$L_t = L_{\infty}e^{-g\cdot(e^{-rt})}$$ 
+        $$W_t = W_{\infty}e^{-bg\cdot{(e^{-rt})}}$$ 
+    \end{subtheorem}
+\end{theorem}
+
+\begin{theorem}CPUE
+    $$CPUE=U=\frac{C}{f}$$
+    $$F=qf$$
+    $$S(L)=\frac{1}{1+e^{(S1-S2L)}} \Rightarrow ln\big(\frac{1}{S(L)}-1\big) = S_1 - S_2L$$
+\end{theorem}
+
+\begin{theorem}死亡
+    $$Z=F+M$$
+    $$A+S=1$$
+    $$N_{t2}=N_{t1}\cdot e^{-Z(t_2-t_1)}$$
+    $$D_{t_1 \rightarrow t_2}=N_t \cdot \big(1-e^{-Z\Delta t}\big)$$
+    $$C_{t_1 \rightarrow t_2}=\frac{F}{Z} \cdot N_{t1} \cdot \big( 1-e^{-Z \Delta t} \big)$$
+    $$E=\frac{C}{D}=\frac{F}{Z}$$
+    $$D=Z(t_2-t_1)\overline{N} $$
+
+    总死亡系数估计：
+
+    BH方法:
+    $$Z=K\frac{L_{\infty}-\overline{L} }{\overline{L}-L_c}$$
+
+    渔获量曲线法：
+    $$C_{i+m}=UR \cdot e^{-Zm}$$
+    $$ln(C_{i+m})=ln(UR) - Zm$$
+
+    取对数后变为线性关系$Y=A+BX$,使用Excel中的INTERCEPT与SLOPE获取A,B的值即可
+
+\end{theorem}
+
+\begin{theorem}实际种群分析(F会变)
+
+    $$C_8=\frac{F_8}{Z_8}N_8(1-e^{-Z_8})$$
+
+    推出
+
+    $$N_8=\frac{N_8Z_8}{F_8(1-e^{-Z_8})}$$
+
+    联立
+    $$N_8=N_7*e^{-Z_7}$$
+    $$C_7=\frac{F_7}{Z_7}N_7(1-e^{-Z_7})$$
+
+    得出预测的Ci
+    $$C_{pre7}=\frac{F_7}{Z_7}N_8(e^{Z7}-1)$$
+
+    对$C_7-C_{pre7}$进行规划求解（目标为0，变量为F7）即可求出N7
+    
+\end{theorem}
+
+\begin{theorem}离散型YPR
+
+    通过生长方程算$L_t$,通过$W=aL^b$算体重,通过渔获量方程算渔获量C与剩余量N,再有：
+
+    $$Y_{wi}=C_i \cdot W_i$$
+    或
+    $$Y_{wi}=C_i \cdot (W_i+W_{i+1})$$
+
+    $$Y_{w}/R=\sum \frac{Y_{wi}}{R}$$
+
+    通过规划求解调整F使$Y_{w}/R$最大即可
+\end{theorem}
 
 \begin{theorem}剩余产量模型
-
-将$R,G,M$合为一项，有：
-$$B_{t+\Delta t} = B_t+S_t-C_t$$
-
+    $$B_{t+1}=B_t+rB_t\big(1-\frac{B_t}{K}\big)-C_t$$
+    平衡状态下：
+    $$U_{tpre}=qB_t=q(B_{t-1}+rB_{t-1}(1-\frac{B_{t-1}}{K})-C_{tobs})$$
+    $$U_{obs}=\frac{C_{obs}}{f_{obs}}$$
+    $$RSS=\sum (U_{tobs}-U_{tpre})^2$$
+    使用规划求解求出使RSS的最小的k,q,r即可
+    
+    $$B_{MSY}=\frac{K}{2}$$
+    $$MSY=\frac{rK}{4}$$
+    $$F_{MSY}=\frac{r}{2}$$
+    $$f_{MSY}=\frac{F_{MSY}}{q}$$
 \end{theorem}
 
-$$
-\begin{aligned}
-    {\frac{dB}{dt}} & = [G(B_t) + R(B_t) - M(B_t)]B_t-F_t(f)B_t \\
-                    & = f(B_t)B_t-F_t(f)B_t
-\end{aligned}
-$$
-
-对于Schaefer模型,有:$f\left(B_t\right) = r\left(1-\frac{B_t}{K}\right)$
-
-故：
-$$dB_t=B_{t+1} - B{t},\space dt=1$$
-$$B_{t+1} = B_t + rB_t\cdot(1-\frac{B_t}{K})\cdot1+C_t\cdot1$$
-
-
-\subsection{剩余产量模型}
-
-假设
-
-$$
-\begin{aligned}
-    {\frac{dN}{dt}} & = bN-dN \text{} \\
-    &=rN
-\end{aligned}
-$$
-\begin{center}
-    $b$为单位时间出生个数,\quad $d$为单位时间死亡个数, \quad$r=b-d$
-\end{center} 
-
+YPR摆了，不看了......
 \end{document}
